@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Habit Tracker</title>
+
+    <link href="css/github_contribution_graph.css" media="all" rel="stylesheet" />
+    <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="js/github_contribution.js"></script>
+    
+    <style>
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background-color: #fefefe;
+        }
+   
+        *[data-date = "2022-11-01"] { 
+            outline: yellow;
+        }
+   </style>
+</head>
+<body>
+    <h2>Graph 1</h2>
+        <div id="your_graph">
+        </div>
+        <div id="hide">
+        <form>
+            <h3>Task completion form goes here</h3>
+            <label>Minutes
+                <input type="text" name="minutes">
+            </label>
+        </form>
+        </div>
+    
+    <script type="text/javascript">
+        
+        var list_of_timestamp = [
+        {
+            timestamp: new Date(2022,5,26,0,0,0,),
+            count: 2
+        },
+        {
+            timestamp: new Date(2022,5,25,0,0,0,),
+            count: 3
+        }
+        ]
+
+    $('#your_graph').github_graph( {
+        // Default is null will display date before 365 days from now
+        start_date: new Date(2022,00,01,0,0,0),
+        //Default is empty list
+        data: list_of_timestamp,
+        // single text and plural text
+        texts: ['completed task','completed tasks'],
+        border:{
+            radius: 0,
+            hover_color: "red",
+        },
+
+         click: function(date, count) {
+            // $("#show").click(function(){
+            $("form").show();
+
+            //alert('You clicked on: ' + date + ' with count is ' + count);
+        },
+    });  
+        
+    $( document ).ready(function() {
+
+        var today = new Date();
+        var dd = String(today.getDate()).padStart(2, '0');
+        var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+        var yyyy = today.getFullYear();
+
+        today = yyyy + '-' +mm + '-' +dd;
+        
+        var todaybox = $("[data-date|=" + today + "]");
+        todaybox.attr("fill", "#FFFF00"); 
+
+        $("#hide").click(function(){
+        $("form").hide();
+    });
+
+    $("#show").click(function(){
+    $("form").show();
+    });
+});
+</script>
+</body>
+</html>
